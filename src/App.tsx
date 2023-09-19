@@ -1,7 +1,8 @@
 import './App.css'
 // import { Register } from './containers'
 // import { Card } from './components';
-import { BookInformation, FormBook } from './containers';
+// import { BookInformation, FormBook } from './containers';
+import { Advanced } from './containers'
 
 const App = () => {
   
@@ -14,8 +15,9 @@ const App = () => {
           <p>ini adalah children dari card kedua</p>
         </Card>
       </Card> */}
-      <FormBook />
-      <BookInformation />
+      {/* <FormBook /> */}
+      {/* <BookInformation /> */}
+      <Advanced />
     </>
   )
 }
