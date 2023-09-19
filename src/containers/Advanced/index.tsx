@@ -1,12 +1,13 @@
-import { useCallback, useEffect, useState, useRef } from 'react'
+import { useCallback, useState, useRef } from 'react'
 import { PokemonList, Memoize, Status } from '../../components';
+import { useFetchList  } from '../../hooks';
 
-interface PokemonResponse {
-    count: number;
-    next: string;
-    previous?: string;
-    results: Pokemon[];
-}
+// interface PokemonResponse {
+//     count: number;
+//     next: string;
+//     previous?: string;
+//     results: Pokemon[];
+// }
 
 interface Pokemon {
     name: string;
@@ -16,7 +17,7 @@ interface Pokemon {
 
 const Advanced = () => {
 
-    const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+    // const [pokemons, setPokemons] = useState<Pokemon[]>([]);
     const [page, setPage] = useState<number>(0);
 
     const handleClick = useCallback(() => {
@@ -24,6 +25,11 @@ const Advanced = () => {
     },[])
 
     const myRef = useRef<HTMLParagraphElement>(null);
+
+    const { data } = useFetchList<Pokemon>({
+        url: `https://pokeapi.co/api/v2/pokemon?limit=20&offset=${page}`,
+        method: 'GET'
+    })
     
     // bad way
     // useEffect(() => {
@@ -39,17 +45,17 @@ const Advanced = () => {
     //     fetchPokemons()
     // }, [])
 
-    const fetchPokemons = useCallback( async () => {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=20&offset=${page}`)
-        const data: PokemonResponse = await response.json()
-        setPokemons((prevState) => [...prevState, ...data.results])
+    // const fetchPokemons = useCallback( async () => {
+    //     const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=20&offset=${page}`)
+    //     const data: PokemonResponse = await response.json()
+    //     setPokemons((prevState) => [...prevState, ...data.results])
         
-        return
-    },[page]);
+    //     return
+    // },[page]);
 
-    useEffect(() => {
-        fetchPokemons()
-    },[fetchPokemons])
+    // useEffect(() => {
+    //     fetchPokemons()
+    // },[fetchPokemons])
 
     const handleChangeBackgroundColor = () => {
         if(myRef.current) {
@@ -59,7 +65,7 @@ const Advanced = () => {
 
     return (
         <div>
-            <PokemonList pokemons={pokemons}/>
+            <PokemonList pokemons={data}/>
             <div>
                 <p>Offset: {page}</p>
             </div>
@@ -70,7 +76,6 @@ const Advanced = () => {
                 [
                     1,2,3,4,5,6,7,8,9,
                     1,2,3,4,5,6,7,8,9,
-
                     1,2,3,4,5,6,7,8,9,
                     1,2,3,4,5,6,7,8,9,
                     1,2,3,4,5,6,7,8,9,
@@ -79,8 +84,6 @@ const Advanced = () => {
                     1,2,3,4,5,6,7,8,9,
                     1,2,3,4,5,6,7,8,9,
                     1,2,3,4,5,6,7,8,9,
-
-                    
                 ]
             }/>
             <Status status={1}/>
