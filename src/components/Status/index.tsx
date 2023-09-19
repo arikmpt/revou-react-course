@@ -1,4 +1,5 @@
-import { useMemo } from "react";
+// import { useMemo } from "react";
+import { useStatus } from '../../hooks'
 
 interface Props {
     status: number;
@@ -6,25 +7,19 @@ interface Props {
 
 const Status = ({ status }: Props) => {
 
-    // const activeStatus = () => {
+    const formattedStatus = useStatus({ status })
+
+    // const activeStatus = useMemo(() => {
     //     if(status === 1) {
     //         return 'Active'
     //     }
 
     //     return 'Deactive'
-    // }
-
-    const activeStatus = useMemo(() => {
-        if(status === 1) {
-            return 'Active'
-        }
-
-        return 'Deactive'
-    }, [status]);
+    // }, [status]);
 
     return (
         <>
-            <p className="contoh">{activeStatus}</p>
+            <p className="contoh">{formattedStatus}</p>
             <p>{status}</p>
             {/* <p className="contoh">{activeStatus()}, {status}</p> */}
         </>

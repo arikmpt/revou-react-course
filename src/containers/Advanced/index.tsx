@@ -83,7 +83,7 @@ const Advanced = () => {
                     
                 ]
             }/>
-            <Status status={5}/>
+            <Status status={1}/>
         </div>
     )
 }
